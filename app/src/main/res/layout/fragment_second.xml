@@ -5,12 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/image"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
     <TextView
         android:id="@+id/result_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:text="Result:"
+        android:textColor="#00A6F1"
         android:textAlignment="center"
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,6 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="Result:"
+        android:textColor="#F60101"
         android:textAlignment="center"
         android:textSize="66sp"
         app:layout_constraintEnd_toEndOf="parent"

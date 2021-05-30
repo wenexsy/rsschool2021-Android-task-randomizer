@@ -1,14 +1,26 @@
 package com.rsschool.android2021
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import java.lang.Exception
+
+
 
 class FirstFragment : Fragment() {
+    private var listener:onActionFirstFragment? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = context as onActionFirstFragment
+    }
 
     private var generateButton: Button? = null
     private var previousResult: TextView? = null
@@ -29,11 +41,28 @@ class FirstFragment : Fragment() {
         val result = arguments?.getInt(PREVIOUS_RESULT_KEY)
         previousResult?.text = "Previous result: ${result.toString()}"
 
-        // TODO: val min = ...
-        // TODO: val max = ...
+        var min:Int
+        var max:Int
+
+        val maxInt = Int.MAX_VALUE
+        val minInt = Int.MIN_VALUE
 
         generateButton?.setOnClickListener {
-            // TODO: send min and max to the SecondFragment
+            try {
+                min = if(view.findViewById<EditText>(R.id.min_value).text.isEmpty()) 0
+                        else view.findViewById<EditText>(R.id.min_value).text.toString().toInt()
+                max = if(view.findViewById<EditText>(R.id.max_value).text.isEmpty()) 0
+                        else view.findViewById<EditText>(R.id.max_value).text.toString().toInt()
+                if(min <= max )
+                    listener?.onActionPerformed(min,max)
+                else
+                    Toast.makeText(getActivity(), "Min > Max... ${maxInt < minInt}",Toast.LENGTH_SHORT).show()
+                } catch (e:Exception){
+                Toast.makeText(getActivity(), "Int very long... ${maxInt}",Toast.LENGTH_LONG).show()
+
+
+            }
+
         }
     }
 
@@ -50,4 +79,16 @@ class FirstFragment : Fragment() {
 
         private const val PREVIOUS_RESULT_KEY = "PREVIOUS_RESULT"
     }
+    interface onActionFirstFragment{
+        fun onActionPerformed(min:Int, max:Int)
+    }
 }
+
+private operator fun Boolean.invoke(value: () -> Unit) {
+
+}
+/* val minValue: EditText = view.findViewById(R.id.min_value) as EditText
+ val min = minValue.text
+ val max = readLine()?.toIntOrNull()
+ generateButton?.setOnClickListener {
+     //send min and max to the SecondFragment*/
