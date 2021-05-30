@@ -14,7 +14,7 @@ import androidx.fragment.app.setFragmentResultListener
 import kotlin.random.Random
 
 class SecondFragment : Fragment() {
-    private var listener:onActionSecondFragment? = null
+    private var listener: onActionSecondFragment? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -42,18 +42,23 @@ class SecondFragment : Fragment() {
 
         result?.text = generate(min, max).toString()
         backButton?.setOnClickListener {
-            // TODO: implement back
+
             listener?.onActionPerformed(result?.text.toString().toInt())
         }
     }
 
     private fun generate(min: Int, max: Int): Int {
-        if (min == max)
+        if (min == max){
+            listener?.onPerfomed(min)
             return min
+        }
 
-        if(min!= 0 || max != 0)
-            return Random.nextInt(min,max)
-
+        if (min != 0 || max != 0){
+            val a = Random.nextInt(min, max)
+            listener?.onPerfomed(a)
+            return a
+        }
+            listener?.onPerfomed(0)
         return 0
     }
 
@@ -63,8 +68,8 @@ class SecondFragment : Fragment() {
         fun newInstance(min: Int, max: Int): SecondFragment {
             val fragment = SecondFragment()
             val args = Bundle()
-            args.putInt(MIN_VALUE_KEY,min)
-            args.putInt(MAX_VALUE_KEY,max)
+            args.putInt(MIN_VALUE_KEY, min)
+            args.putInt(MAX_VALUE_KEY, max)
             fragment.arguments = args
             return fragment
         }
@@ -72,7 +77,9 @@ class SecondFragment : Fragment() {
         private const val MIN_VALUE_KEY = "MIN_VALUE"
         private const val MAX_VALUE_KEY = "MAX_VALUE"
     }
-    interface onActionSecondFragment{
-        fun onActionPerformed(result:Int)
+
+    interface onActionSecondFragment {
+        fun onPerfomed(result: Int)
+        fun onActionPerformed(result: Int)
     }
 }

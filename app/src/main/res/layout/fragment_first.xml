@@ -34,11 +34,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:hint="Min"
-        android:textColorHint="#ff0026"
-        android:textColor="#09CC11"
         android:inputType="number"
+        android:maxLength="10"
+        android:textColor="#09CC11"
+        android:textColorHint="#ff0026"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/previous_result" />
 
@@ -51,6 +53,7 @@
         android:textColor="#EC0606"
         android:inputType="number"
         android:textSize="20sp"
+        android:maxLength="10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/min_value" />

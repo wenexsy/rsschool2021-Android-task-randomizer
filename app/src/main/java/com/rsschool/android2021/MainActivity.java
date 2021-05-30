@@ -16,6 +16,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class MainActivity extends AppCompatActivity implements FirstFragment.onActionFirstFragment,
         SecondFragment.onActionSecondFragment {
+    private static String piska = null;
+    private static int britaya = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,16 +35,33 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.onA
     }
 
     private void openSecondFragment(int min, int max) {
-        final Fragment secondFragment = SecondFragment.newInstance(min,max);
+        final Fragment secondFragment = SecondFragment.newInstance(min, max);
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container,secondFragment);
+        transaction.replace(R.id.container, secondFragment);
+        piska = "Писка";
         transaction.commit();
 
     }
 
     @Override
+    public void onBackPressed() {
+        if (piska.equals("Писка")) {
+            openFirstFragment(britaya);
+        } else {
+            super.onBackPressed();
+        }
+
+    }
+
+    @Override
+    public void onPerfomed(int result) {
+        MainActivity.britaya = result;
+
+    }
+
+    @Override
     public void onActionPerformed(int min, int max) {
-        openSecondFragment(min,max);
+        openSecondFragment(min, max);
     }
 
     @Override
@@ -51,11 +70,11 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.onA
     }
 }
 
-        //transaction.commit();
-         // min_value = (EditText)findViewById(R.id.min_value);
-        //  textView = (TextView)findViewById(R.id.result);
-        //  max_value = (EditText) findViewById(R.id.max_value);
-        //  back = (Button) findViewById(R.id.back);
-        //  result = (TextView) findViewById(R.id.result);
-        //  result_label = (TextView) findViewById(R.id.result_label);
+//transaction.commit();
+// min_value = (EditText)findViewById(R.id.min_value);
+//  textView = (TextView)findViewById(R.id.result);
+//  max_value = (EditText) findViewById(R.id.max_value);
+//  back = (Button) findViewById(R.id.back);
+//  result = (TextView) findViewById(R.id.result);
+//  result_label = (TextView) findViewById(R.id.result_label);
 

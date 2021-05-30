@@ -13,9 +13,8 @@ import androidx.fragment.app.Fragment
 import java.lang.Exception
 
 
-
 class FirstFragment : Fragment() {
-    private var listener:onActionFirstFragment? = null
+    private var listener: onActionFirstFragment? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -41,24 +40,29 @@ class FirstFragment : Fragment() {
         val result = arguments?.getInt(PREVIOUS_RESULT_KEY)
         previousResult?.text = "Previous result: ${result.toString()}"
 
-        var min:Int
-        var max:Int
+        var min: Int
+        var max: Int
 
         val maxInt = Int.MAX_VALUE
         val minInt = Int.MIN_VALUE
 
         generateButton?.setOnClickListener {
             try {
-                min = if(view.findViewById<EditText>(R.id.min_value).text.isEmpty()) 0
-                        else view.findViewById<EditText>(R.id.min_value).text.toString().toInt()
-                max = if(view.findViewById<EditText>(R.id.max_value).text.isEmpty()) 0
-                        else view.findViewById<EditText>(R.id.max_value).text.toString().toInt()
-                if(min <= max )
-                    listener?.onActionPerformed(min,max)
+                min = if (view.findViewById<EditText>(R.id.min_value).text.isEmpty()) 0
+                else view.findViewById<EditText>(R.id.min_value).text.toString().toInt()
+                max = if (view.findViewById<EditText>(R.id.max_value).text.isEmpty()) 0
+                else view.findViewById<EditText>(R.id.max_value).text.toString().toInt()
+                if (min <= max)
+                    listener?.onActionPerformed(min, max)
                 else
-                    Toast.makeText(getActivity(), "Min > Max... ${maxInt < minInt}",Toast.LENGTH_SHORT).show()
-                } catch (e:Exception){
-                Toast.makeText(getActivity(), "Int very long... ${maxInt}",Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        getActivity(),"Min > Max... ${maxInt < minInt}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+            } catch (e: Exception) {
+                Toast.makeText(getActivity(), "Int very long... ${maxInt}", Toast.LENGTH_LONG)
+                    .show()
 
 
             }
@@ -79,8 +83,9 @@ class FirstFragment : Fragment() {
 
         private const val PREVIOUS_RESULT_KEY = "PREVIOUS_RESULT"
     }
-    interface onActionFirstFragment{
-        fun onActionPerformed(min:Int, max:Int)
+
+    interface onActionFirstFragment {
+        fun onActionPerformed(min: Int, max: Int)
     }
 }
 
