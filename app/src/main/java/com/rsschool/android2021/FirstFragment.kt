@@ -10,7 +10,6 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import java.lang.Exception
 
 
 class FirstFragment : Fragment() {
@@ -24,6 +23,9 @@ class FirstFragment : Fragment() {
     private var generateButton: Button? = null
     private var previousResult: TextView? = null
 
+    private lateinit var minValue: EditText
+    private lateinit var maxValue: EditText
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,10 +34,14 @@ class FirstFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_first, container, false)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         previousResult = view.findViewById(R.id.previous_result)
         generateButton = view.findViewById(R.id.generate)
+
+        minValue = view.findViewById(R.id.min_value)
+        maxValue = view.findViewById(R.id.max_value)
 
         val result = arguments?.getInt(PREVIOUS_RESULT_KEY)
         previousResult?.text = "Previous result: ${result.toString()}"
@@ -43,31 +49,63 @@ class FirstFragment : Fragment() {
         var min: Int
         var max: Int
 
-        val maxInt = Int.MAX_VALUE
-        val minInt = Int.MIN_VALUE
-
         generateButton?.setOnClickListener {
-            try {
-                min = if (view.findViewById<EditText>(R.id.min_value).text.isEmpty()) 0
-                else view.findViewById<EditText>(R.id.min_value).text.toString().toInt()
-                max = if (view.findViewById<EditText>(R.id.max_value).text.isEmpty()) 0
-                else view.findViewById<EditText>(R.id.max_value).text.toString().toInt()
-                if (min <= max)
+//            try {
+            if (minValue.text.isNotEmpty() && maxValue.text.isNotEmpty()) {
+
+                min = minValue.text.toString().toInt()
+                max = maxValue.text.toString().toInt()
+
+                if (min <= max) {
                     listener?.onActionPerformed(min, max)
-                else
+                } else {
                     Toast.makeText(
-                        getActivity(),"Min > Max... ${maxInt < minInt}",
+                        activity, "Min > Max",
                         Toast.LENGTH_SHORT
                     ).show()
-
-            } catch (e: Exception) {
-                Toast.makeText(getActivity(), "Int very long... ${maxInt}", Toast.LENGTH_LONG)
-                    .show()
-
-
+                }
+            } else{
+                Toast.makeText(
+                    activity, "Min or Max is null",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-
+//            } catch (e: Exception) {
+//                Toast.makeText(
+//                    activity, "Error",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//
+//            }
         }
+
+
+//                try {
+
+//                    if (view.findViewById<EditText>(R.id.min_value).text.isNotEmpty()) {
+//                        min = view.findViewById<EditText>(R.id.min_value).text.toString().toInt()
+//                    }
+
+//                min = if (view.findViewById<EditText>(R.id.min_value).text.isEmpty()) 0
+//                else view.findViewById<EditText>(R.id.min_value).text.toString().toInt()
+//                    max = if (view.findViewById<EditText>(R.id.max_value).text.isEmpty()) 0
+//                    else view.findViewById<EditText>(R.id.max_value).text.toString().toInt()
+//                    if (min <= max)
+//                        listener?.onActionPerformed(min, max)
+//                    else
+//                        Toast.makeText(
+//                            getActivity(), "Min > Max... ${maxInt < minInt}",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//
+//                } catch (e: Exception) {
+//                    Toast.makeText(getActivity(), "Int very long... ${maxInt}", Toast.LENGTH_LONG)
+//                        .show()
+//
+//
+//                }
+
+//        }
     }
 
     companion object {
